@@ -1,184 +1,183 @@
-CREATE DATABASE Marlin;
-DROP DATABASE Marlin; 
-USE Marlin ;
+-- DROP DATABASE marlin-db; 
+CREATE DATABASE marlin-db;
+USE marlin-db ;
 
 -- -----------------------------------------------------
--- Table `Marlin`.`State`
+-- Table `marlin-db`.`state`
 -- -----------------------------------------------------
-CREATE TABLE State (
-idState INT NOT NULL,
-name VARCHAR(50) NULL
-PRIMARY KEY (idState));
+CREATE TABLE state (
+id_state INT NOT NULL IDENTITY(1,1),
+state_name VARCHAR(50) NULL
+PRIMARY KEY (id_state));
 
-INSERT INTO State VALUES 
-(NULL,'BAJA CALIFORNIA'), 
-(NULL,'BAJA CALIFORNIA SUR'),
-(NULL,'CAMPECHE'),
-(NULL,'CHIAPAS'),
-(NULL,'COLIMA'), 
-(NULL,'GUERRERO'), 
-(NULL,'JALISCO'),
-(NULL,'MICHOACAN'),
-(NULL,'NAYARIT'),
-(NULL,'OAXACA'),
-(NULL,'QUINTA ROO'),
-(NULL,'SINALOA'),
-(NULL,'SONORA'), 
-(NULL,'TABASCO'),
-(NULL,'TAMAULIPAS'),
-(NULL,'VERACRUZ'),
-(NULL,'YUCATAN');
+INSERT INTO state VALUES 
+('BAJA CALIFORNIA'), 
+('BAJA CALIFORNIA SUR'),
+('CAMPECHE'),
+('CHIAPAS'),
+('COLIMA'), 
+('GUERRERO'), 
+('JALISCO'),
+('MICHOACAN'),
+('NAYARIT'),
+('OAXACA'),
+('QUINTA ROO'),
+('SINALOA'),
+('SONORA'), 
+('TABASCO'),
+('TAMAULIPAS'),
+('VERACRUZ'),
+('YUCATAN');
 
 
 
 
 -- -----------------------------------------------------
--- Table `Marlin`.`City`
+-- Table `marlin-db`.`city`
 -- -----------------------------------------------------
-CREATE TABLE City (
-  idCity INT NOT NULL,
-  name VARCHAR(50) NULL,
-  State_idState INT NOT NULL,
-  PRIMARY KEY (idCity),
-  INDEX fk_City_State_idx (State_idState ASC),
-  CONSTRAINT fk_City_State
-    FOREIGN KEY (State_idState)
-    REFERENCES Marlin.State (idState)
+CREATE TABLE city (
+  id_city INT NOT NULL IDENTITY(1,1),
+  city_name VARCHAR(50) NULL,
+  id_state INT NOT NULL,
+  PRIMARY KEY (id_city),
+  INDEX fk_city_state_idx (id_state ASC),
+  CONSTRAINT fk_city_state
+    FOREIGN KEY (id_state)
+    REFERENCES state (id_state)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
 );
 
-INSERT INTO City VALUES 
-(NULL,'TIJUANA',1),
-(NULL,'LA PAZ',2), 
-(NULL,'CIUDAD DEL CARMEN',3),
-(NULL,'TONALÁ',4),
-(NULL,'ARMERÍA',5),
-(NULL,'ACAPULCO',6),
-(NULL,'PUERTO VALLARTA',7),
-(NULL,'AQUILA',8),
-(NULL,'BAHÍA DE BANDERAS',9),
-(NULL,'HUATULCO',10),
-(NULL,'CANCÚN',11),
-(NULL,'BAHÍA DE ALTATA',12),
-(NULL,'BAHÍA DE KINO',13),
-(NULL,'CARDENAS',14),
-(NULL,'ALDAMA',15),
-(NULL,'MARTÍNEZ DE LA TORRE',16),
-(NULL,'TELCHAC',17);
+INSERT INTO city VALUES 
+('TIJUANA',1),
+('LA PAZ',2), 
+('CIUDAD DEL CARMEN',3),
+('TONALÁ',4),
+('ARMERÍA',5),
+('ACAPULCO',6),
+('PUERTO VALLARTA',7),
+('AQUILA',8),
+('BAHÍA DE BANDERAS',9),
+('HUATULCO',10),
+('CANCÚN',11),
+('BAHÍA DE ALTATA',12),
+('BAHÍA DE KINO',13),
+('CARDENAS',14),
+('ALDAMA',15),
+('MARTÍNEZ DE LA TORRE',16),
+('TELCHAC',17);
 
 
 
 -- -----------------------------------------------------
--- Table `Marlin`.`Statistics`
+-- Table `marlin-db`.`beach_statistics`
 -- -----------------------------------------------------
-CREATE TABLE Estadisticas(
-  idStatistics INT NOT NULL PRIMARY KEY,
-  conta_level ENUM('Alta', 'Media', 'Baja') NULL,
+CREATE TABLE beach_statistics(
+  id_beach_statistics INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+  contamination_level VARCHAR(10) NULL,
   quality VARCHAR(50) NULL,
-  year YEAR(2022) NULL
-  
+  year INTEGER NULL
 );
 
-INSERT INTO Estadisticas VALUES
-(NULL,'Media', 'Apta',2022),
-(NULL,'Media', 'Apta',2022),
-(NULL,'Media', 'Apta',2022),
-(NULL,'Media', 'Apta',2022),
-(NULL,'Media', 'Apta',2022),
-(NULL,'Media', 'Apta',2022),
-(NULL,'Media', 'Apta',2022),
-(NULL,'Media', 'Apta',2022),
-(NULL,'Media', 'Apta',2022),
-(NULL,'Media', 'Apta',2022),
-(NULL,'Media', 'Apta',2022),
-(NULL,'Media', 'Apta',2022),
-(NULL,'Media', 'Apta',2022),
-(NULL,'Media', 'Apta',2022),
-(NULL,'Media', 'Apta',2022),
-(NULL,'Media', 'Apta',2022),
-(NULL,'Media', 'Apta',2022);
+INSERT INTO beach_statistics VALUES
+('Media', 'Apta',2022),
+('Media', 'Apta',2022),
+('Media', 'Apta',2022),
+('Media', 'Apta',2022),
+('Media', 'Apta',2022),
+('Media', 'Apta',2022),
+('Media', 'Apta',2022),
+('Media', 'Apta',2022),
+('Media', 'Apta',2022),
+('Media', 'Apta',2022),
+('Media', 'Apta',2022),
+('Media', 'Apta',2022),
+('Media', 'Apta',2022),
+('Media', 'Apta',2022),
+('Media', 'Apta',2022),
+('Media', 'Apta',2022),
+('Media', 'Apta',2022);
 
 
 
 
 -- -----------------------------------------------------
--- Table `Marlin`.`Beach`
+-- Table `marlin-db`.`beach`
 -- -----------------------------------------------------
-CREATE TABLE Beach (
-  idBeach INT NOT NULL,
-  nombre VARCHAR(100) NULL,
-  City_idCity INT NOT NULL,
-  Estadisticas_idStatistics INT NOT NULL,
-  PRIMARY KEY (idBeach),
-  INDEX fk_Beach_City1_idx (City_idCity ASC),
-  INDEX fk_Beach_Statistics1_idx (Estadisticas_idStatistics ASC),
-  CONSTRAINT fk_Beach_City1
-    FOREIGN KEY (City_idCity)
-    REFERENCES Marlin.City (idCity)
+CREATE TABLE beach (
+  id_beach INT NOT NULL IDENTITY(1,1),
+  beach_name VARCHAR(100) NULL,
+  id_city INT NOT NULL,
+  id_beach_statistics INT NOT NULL,
+  PRIMARY KEY (id_beach),
+  INDEX fk_beach_city1_idx (id_city ASC),
+  INDEX fk_beach_statistics1_idx (id_beach_statistics ASC),
+  CONSTRAINT fk_beach_city1
+    FOREIGN KEY (id_city)
+    REFERENCES city (id_city)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT fk_Beach_Statistics1
-    FOREIGN KEY (Estadisticas_idStatistics)
-    REFERENCES Marlin.Estadisticas (idStatistics)
+  CONSTRAINT fk_beach_Statistics1
+    FOREIGN KEY (id_beach_statistics)
+    REFERENCES beach_statistics (id_beach_statistics)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
 );
 
-INSERT INTO Beach Values 
-(NULL,'Playa de Tijuana',1,1),
-(NULL,'Playa Coromuel, El tecolote',2,2),
-(NULL,'Playa Manigua, Playa Norte 1',3,3),
-(NULL,'Playa Boca del cielo',4,4),
-(NULL,'Cuyutlan, El Paraiso',5,5),
-(NULL,'Caleta, La Roqueta',6,6),
-(NULL,'Playa Yelapa, Playa Quimixto',7,7),
-(NULL,'Playa Nexpa, Playa Maruata',8,8),
-(NULL,'Playa Nuevo Vallarta 1, Playa Bucerias',9,9),
-(NULL,'Playa Maguey, Playa Bahia Santa Cruz',10,10),
-(NULL,'Playa Puerto Morelos, Playa Delfines',11,11),
-(NULL,'Playa Altada',12,12),
-(NULL,'Playa Bahia de Kino 1 ',13,13),
-(NULL,'Playa Sánchez Magallanes',14,14),
-(NULL,'Playa Barra del Tordo',15,15),
-(NULL,'Playa Tecolutla, Playa Noray',16,16),
-(NULL,'Playa Telchac',17,17);
+INSERT INTO beach Values 
+('Playa de Tijuana',1,1),
+('Playa Coromuel, El tecolote',2,2),
+('Playa Manigua, Playa Norte 1',3,3),
+('Playa Boca del cielo',4,4),
+('Cuyutlan, El Paraiso',5,5),
+('Caleta, La Roqueta',6,6),
+('Playa Yelapa, Playa Quimixto',7,7),
+('Playa Nexpa, Playa Maruata',8,8),
+('Playa Nuevo Vallarta 1, Playa Bucerias',9,9),
+('Playa Maguey, Playa Bahia Santa Cruz',10,10),
+('Playa Puerto Morelos, Playa Delfines',11,11),
+('Playa Altada',12,12),
+('Playa Bahia de Kino 1 ',13,13),
+('Playa Sánchez Magallanes',14,14),
+('Playa Barra del Tordo',15,15),
+('Playa Tecolutla, Playa Noray',16,16),
+('Playa Telchac',17,17);
 
 
 -- -----------------------------------------------------
--- Table `Marlin`.`Post`
+-- Table `marlin-db`.`post`
 -- -----------------------------------------------------
-CREATE TABLE Post (
-  idPost INT NOT NULL,
-  name VARCHAR(40) NULL,
+CREATE TABLE post (
+  id_post INT NOT NULL IDENTITY(1,1),
+  name VARCHAR(50) NULL,
+  beach_name VARCHAR(40) NULL,
   title VARCHAR(40) NULL,
-  description TEXT(100) NULL,
-  fileName BLOB NULL,
-  PRIMARY KEY (idPost)
+  description VARCHAR(100) NULL,
+  file_name VARCHAR(100) NULL,
+  PRIMARY KEY (id_post)
 );
 
 
 
 -- -----------------------------------------------------
--- Table `Marlin`.`Post_has_Beach`
+-- Table `marlin-db`.`post_has_beach`
 -- -----------------------------------------------------
-CREATE TABLE Post_has_Beach (
-  Post_idPost INT NOT NULL,
-  Beach_idBeach INT NOT NULL,
-  PRIMARY KEY (Post_idPost, Beach_idBeach),
-  INDEX fk_Post_has_Beach_Beach1_idx (Beach_idBeach ASC),
-  INDEX fk_Post_has_Beach_Post1_idx (Post_idPost ASC),
-  CONSTRAINT fk_Post_has_Beach_Post1
-    FOREIGN KEY (Post_idPost)
-    REFERENCES Marlin.Post (idPost)
+CREATE TABLE post_has_beach (
+  id_post INT NOT NULL,
+  id_beach INT NOT NULL,
+  PRIMARY KEY (id_post, id_beach),
+  INDEX fk_post_has_beach_beach1_idx (id_beach ASC),
+  INDEX fk_post_has_beach_post1_idx (id_post ASC),
+  CONSTRAINT fk_post_has_beach_post1
+    FOREIGN KEY (id_post)
+    REFERENCES post (id_post)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT fk_Post_has_Beach_Beach1
-    FOREIGN KEY (Beach_idBeach)
-    REFERENCES Marlin.Beach (idBeach)
+  CONSTRAINT fk_post_has_beach_beach1
+    FOREIGN KEY (id_beach)
+    REFERENCES beach (id_beach)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
 );
-
 
 
